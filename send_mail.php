@@ -186,23 +186,25 @@ if (
 $body = implode("\n", $lines);
 
 // -----------------------------------------------------------------------
-// Send email via PHP mail()
+// SMTP config (loaded from a gitignored file that only exists on the
+// server; see mail_config.sample.php for the expected shape)
 // -----------------------------------------------------------------------
-$to = trim('gbasetechnologies.info@gmail.com');
-$subject = "GBASE Enquiry from {$company} ({$final_country})";
-
-// Use a domain address in From so Hostinger's MTA accepts it.
-// Must match the domain actually hosted on this Hostinger account
-// (gbase.co.in) — a mismatched From domain causes mail() to fail.
-$from_name = 'GBASE Website';
-$from_address = 'noreply@gbase.co.in';
-
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "From: {$from_name} <{$from_address}>\r\n";
-if (!empty($email)) {
-    $headers .= "Reply-To: {$name} <{$email}>\r\n";
+$config_path = __DIR__ . '/mail_config.php';
+if (!file_exists($config_path)) {
+    error_log('GBASE send_mail.php: mail_config.php is missing.');
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Sorry, there was a problem sending your message. Please try again or contact us directly.'
+    ]);
+    exit;
 }
-$headers .= "X-Mailer: PHP/" . PHP_VERSION;
+$mail_config = require $config_path;
+
+$to = trim($mail_config['to_address']);
+$subject = "GBASE Enquiry from {$company} ({$final_country})";
+$from_name = $mail_config['from_name'];
+$from_address = $mail_config['from_address'];
 
 // -----------------------------------------------------------------------
 // Attach images if provided (multipart/mixed)
@@ -310,45 +312,50 @@ if (!empty($upload_errors)) {
     $body = implode("\n", $lines);
 }
 
-if (!empty($attachments)) {
-    $boundary = "gbase_boundary_" . md5(uniqid((string) microtime(true), true));
-    $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"{$boundary}\"";
+// -----------------------------------------------------------------------
+// Send via SMTP (PHPMailer) — PHP mail() doesn't work on this server
+// since there is no local MTA and outbound port 25 is blocked.
+// -----------------------------------------------------------------------
+require_once __DIR__ . '/lib/PHPMailer/Exception.php';
+require_once __DIR__ . '/lib/PHPMailer/PHPMailer.php';
+require_once __DIR__ . '/lib/PHPMailer/SMTP.php';
 
-    $multipart = "--{$boundary}\r\n";
-    $multipart .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    $multipart .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-    $multipart .= $body . "\r\n";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
-    foreach ($attachments as $att) {
-        $file_data = file_get_contents($att['tmp']);
-        if ($file_data === false) {
-            continue;
-        }
-        $file_data = chunk_split(base64_encode($file_data));
-        $safe_name = preg_replace('/[^A-Za-z0-9._-]/', '_', $att['name']);
+try {
+    $mailer = new PHPMailer(true);
+    $mailer->isSMTP();
+    $mailer->Host = $mail_config['smtp_host'];
+    $mailer->Port = $mail_config['smtp_port'];
+    $mailer->SMTPAuth = true;
+    $mailer->Username = $mail_config['smtp_username'];
+    $mailer->Password = $mail_config['smtp_password'];
+    $mailer->SMTPSecure = $mail_config['smtp_secure'];
+    $mailer->CharSet = 'UTF-8';
 
-        $multipart .= "--{$boundary}\r\n";
-        $multipart .= "Content-Type: {$att['type']}; name=\"{$safe_name}\"\r\n";
-        $multipart .= "Content-Transfer-Encoding: base64\r\n";
-        $multipart .= "Content-Disposition: attachment; filename=\"{$safe_name}\"\r\n\r\n";
-        $multipart .= $file_data . "\r\n";
+    $mailer->setFrom($from_address, $from_name);
+    $mailer->addAddress($to);
+    if (!empty($email)) {
+        $mailer->addReplyTo($email, $name ?: $email);
     }
 
-    $multipart .= "--{$boundary}--";
-    $mail_body = $multipart;
-} else {
-    $headers .= "\r\nContent-Type: text/plain; charset=UTF-8";
-    $mail_body = $body;
-}
+    $mailer->Subject = $subject;
+    $mailer->isHTML(false);
+    $mailer->Body = $body;
 
-if (mail($to, $subject, $mail_body, $headers)) {
+    foreach ($attachments as $att) {
+        $mailer->addAttachment($att['tmp'], $att['name'], 'base64', $att['type']);
+    }
+
+    $mailer->send();
+
     echo json_encode([
         'success' => true,
         'message' => 'Thank you! Your message has been sent. We will get back to you shortly.'
     ]);
-} else {
-    $last_error = error_get_last();
-    error_log('GBASE send_mail.php: mail() failed. ' . ($last_error['message'] ?? 'No PHP error details available.'));
+} catch (PHPMailerException $e) {
+    error_log('GBASE send_mail.php: PHPMailer failed to send. ' . $mailer->ErrorInfo);
     http_response_code(500);
     echo json_encode([
         'success' => false,
