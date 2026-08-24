@@ -192,9 +192,10 @@ $to = trim('gbasetechnologies.info@gmail.com');
 $subject = "GBASE Enquiry from {$company} ({$final_country})";
 
 // Use a domain address in From so Hostinger's MTA accepts it.
-// Change the domain below to match your actual domain on Hostinger.
+// Must match the domain actually hosted on this Hostinger account
+// (gbase.co.in) — a mismatched From domain causes mail() to fail.
 $from_name = 'GBASE Website';
-$from_address = 'noreply@gbasetechnologies.com'; // update if your domain differs
+$from_address = 'noreply@gbase.co.in';
 
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "From: {$from_name} <{$from_address}>\r\n";
@@ -346,6 +347,8 @@ if (mail($to, $subject, $mail_body, $headers)) {
         'message' => 'Thank you! Your message has been sent. We will get back to you shortly.'
     ]);
 } else {
+    $last_error = error_get_last();
+    error_log('GBASE send_mail.php: mail() failed. ' . ($last_error['message'] ?? 'No PHP error details available.'));
     http_response_code(500);
     echo json_encode([
         'success' => false,
