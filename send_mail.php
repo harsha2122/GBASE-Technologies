@@ -40,6 +40,22 @@ function field_prefix_in_list(string $prefix, array $field_list): bool
     return false;
 }
 
+// Turn a page_source path like "process/used-equipments.html" into a
+// readable label like "Process - Used Equipments" for the subject/body.
+function humanize_page_source(string $raw): string
+{
+    if ($raw === '' || $raw === 'Unknown page') {
+        return 'Unknown page';
+    }
+    $path = preg_replace('/\.html?$/i', '', $raw);
+    $segments = array_filter(explode('/', $path), fn($s) => $s !== '');
+    $labels = array_map(function ($segment) {
+        $words = preg_split('/[-_]+/', $segment);
+        return implode(' ', array_map('ucfirst', $words));
+    }, $segments);
+    return implode(' - ', $labels);
+}
+
 // -----------------------------------------------------------------------
 // Collect & sanitise all possible fields
 // -----------------------------------------------------------------------
@@ -102,9 +118,11 @@ if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 // -----------------------------------------------------------------------
 $final_country = ($country === 'Others' && !empty($country_other)) ? $country_other : $country;
 
+$page_label = humanize_page_source($page_source);
+
 $lines = [];
 $lines[] = "New enquiry from the GBASE website";
-$lines[] = "Page: {$page_source}";
+$lines[] = "Page: {$page_label} ({$page_source})";
 $lines[] = str_repeat('-', 50);
 if (field_in_list('company', $field_list)) $lines[] = "Company:              {$company}";
 if (field_in_list('name', $field_list)) $lines[] = "Contact Name:         {$name}";
@@ -202,7 +220,7 @@ if (!file_exists($config_path)) {
 $mail_config = require $config_path;
 
 $to = trim($mail_config['to_address']);
-$subject = "GBASE Enquiry from {$company} ({$final_country})";
+$subject = "GBASE Enquiry [{$page_label}] from {$company} ({$final_country})";
 $from_name = $mail_config['from_name'];
 $from_address = $mail_config['from_address'];
 

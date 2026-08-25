@@ -1248,12 +1248,13 @@
 
 <script>
     fetch("https://docs.google.com/spreadsheets/d/1RGc6U3g47dbMTSTT_tediyKINoG-PFBLKA-jAG93zaI/gviz/tq?tqx=out:csv&sheet=Sheet1")
-      .then(res => res.text())
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.text();
+      })
       .then(csv => {
-
         // Split rows and remove title row
-        const rows = csv.split("
-").slice(1);
+        const rows = csv.split("\n").slice(1);
 
         const tbody = document.querySelector("#usedEquipmentTable tbody");
         tbody.innerHTML = "";
@@ -1273,17 +1274,29 @@
           if (!sno || !product) return;
 
           const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${sno}</td>
-            <td>${product}</td>
-            <td>${capacity || "-"}</td>
-        `;
+          const snoTd = document.createElement("td");
+          snoTd.textContent = sno;
+          const productTd = document.createElement("td");
+          productTd.textContent = product;
+          const capacityTd = document.createElement("td");
+          capacityTd.textContent = capacity || "-";
+          tr.append(snoTd, productTd, capacityTd);
 
           tbody.appendChild(tr);
         });
+      })
+      .catch(err => {
+        console.error("Failed to load used equipment sheet:", err);
+        const tbody = document.querySelector("#usedEquipmentTable tbody");
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 3;
+        td.style.textAlign = "center";
+        td.textContent = "Unable to load the latest equipment list right now. Please contact us directly.";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
       });
   </script>
-  ``
 
 
 
