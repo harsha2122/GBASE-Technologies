@@ -6,9 +6,19 @@
     @if ($page->meta_description)
         <meta name="description" content="{{ $page->meta_description }}">
     @endif
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/slick.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/meanmenu.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/nice-select.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/search.css') }}" rel="stylesheet">
 </head>
 <body>
+    @include('public.partials.mobile-nav')
     @include('public.partials.header')
 
     <main>
@@ -26,6 +36,11 @@
                         @endif
                         @break
 
+                    @case ('rich_text')
+                        @if ($section->heading)<h2>{{ $section->heading }}</h2>@endif
+                        {!! $section->body !!}
+                        @break
+
                     @default
                         @if ($section->heading)<h2>{{ $section->heading }}</h2>@endif
                         <div class="gbase-section__body">{!! nl2br(e($section->body)) !!}</div>
@@ -34,13 +49,21 @@
         @endforeach
 
         @foreach ($page->forms as $form)
-            <section class="gbase-contact-form-wrapper">
-                <x-dynamic-form :form="$form" :page-source="$page->slug" />
-            </section>
+            {!! $form->before_html !!}
+            <x-dynamic-form :form="$form" :page-source="$page->slug" />
+            {!! $form->after_html !!}
         @endforeach
     </main>
 
     @include('public.partials.footer')
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+
+    @if ($page->custom_scripts)
+        {!! $page->custom_scripts !!}
+    @endif
 
     <script>
     // Same AJAX submit pattern as before: intercept, POST as FormData, show result.

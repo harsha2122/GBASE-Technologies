@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Page extends Model
 {
-    protected $fillable = ['slug', 'title', 'meta_description', 'template', 'is_published'];
+    protected $fillable = ['slug', 'title', 'meta_description', 'template', 'custom_scripts', 'is_published'];
 
     protected $casts = ['is_published' => 'boolean'];
 

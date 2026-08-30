@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Form extends Model
 {
-    protected $fillable = ['key', 'name', 'page_id', 'notify_email', 'submit_button_text'];
+    protected $fillable = ['key', 'name', 'page_id', 'notify_email', 'submit_button_text', 'before_html', 'after_html'];
 
     public function page(): BelongsTo
     {
