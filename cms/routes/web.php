@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CardController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FormController;
 use App\Http\Controllers\Admin\FormSubmissionController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PageSectionController;
+use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\FormSubmitController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +30,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware('admin.auth')->group(function () {
-        Route::get('/', fn () => redirect()->route('admin.pages.index'))->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+        // Pages & Sections
         Route::resource('pages', PageController::class)->except(['show']);
         Route::post('pages/{page}/sections', [PageSectionController::class, 'store'])->name('pages.sections.store');
         Route::put('pages/{page}/sections/{section}', [PageSectionController::class, 'update'])->name('pages.sections.update');
@@ -36,6 +42,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('sections/{section}/cards/{card}', [CardController::class, 'update'])->name('sections.cards.update');
         Route::delete('sections/{section}/cards/{card}', [CardController::class, 'destroy'])->name('sections.cards.destroy');
 
+        // Forms
         Route::resource('forms', FormController::class)->except(['show']);
         Route::post('forms/{form}/fields', [FormController::class, 'storeField'])->name('forms.fields.store');
         Route::put('forms/{form}/fields/{field}', [FormController::class, 'updateField'])->name('forms.fields.update');
@@ -43,6 +50,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('forms/{form}/submissions', [FormSubmissionController::class, 'index'])->name('forms.submissions.index');
         Route::get('forms/{form}/submissions/{submission}', [FormSubmissionController::class, 'show'])->name('forms.submissions.show');
+        Route::delete('forms/{form}/submissions/{submission}', [FormSubmissionController::class, 'destroy'])->name('forms.submissions.destroy');
+
+        // Gallery
+        Route::resource('gallery', GalleryController::class);
+
+        // Blog
+        Route::resource('blog', BlogController::class);
+
+        // Partners
+        Route::resource('partners', PartnerController::class);
+        Route::post('partners/reorder', [PartnerController::class, 'reorder'])->name('partners.reorder');
+
+        // Settings
+        Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
     });
 });
 

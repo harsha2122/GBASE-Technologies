@@ -19,4 +19,9 @@ class PageSection extends Model
     {
         return $this->hasMany(Card::class)->orderBy('sort_order');
     }
+
+    public function galleries(): HasMany
+    {
+        return $this->hasMany(Gallery::class)->orderBy('sort_order');
+    }
 }

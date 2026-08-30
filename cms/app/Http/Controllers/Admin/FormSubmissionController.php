@@ -23,4 +23,22 @@ class FormSubmissionController extends Controller
         $submission->load('values.field');
         return view('admin.forms.submission', compact('form', 'submission'));
     }
+
+    public function allSubmissions()
+    {
+        $submissions = FormSubmission::with('form')->latest()->paginate(20);
+        $totalCount = FormSubmission::count();
+        $todayCount = FormSubmission::whereDate('created_at', today())->count();
+        $weekCount = FormSubmission::whereDate('created_at', '>=', today()->subDays(7))->count();
+
+        return view('admin.submissions.all', compact('submissions', 'totalCount', 'todayCount', 'weekCount'));
+    }
+
+    public function destroy(Form $form, FormSubmission $submission)
+    {
+        $submission->values()->delete();
+        $submission->delete();
+
+        return back()->with('success', 'Submission deleted successfully.');
+    }
 }
