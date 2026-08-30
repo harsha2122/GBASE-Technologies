@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('admin_id')->nullable()->index();
+            // Laravel's DatabaseSessionHandler hardcodes the column name
+            // "user_id" regardless of the guard's model — do not rename it.
+            $table->foreignId('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
