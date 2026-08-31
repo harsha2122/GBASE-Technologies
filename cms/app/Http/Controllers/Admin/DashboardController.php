@@ -19,7 +19,8 @@ class DashboardController extends Controller
             'published_pages' => Page::where('is_published', true)->count(),
             'total_forms' => Form::count(),
             'total_submissions' => FormSubmission::count(),
-            'recent_submissions' => FormSubmission::with('form')->latest()->take(5)->get(),
+            'today_submissions' => FormSubmission::whereDate('created_at', today())->count(),
+            'recent_submissions' => FormSubmission::with('form')->latest()->take(8)->get(),
             'total_galleries' => Gallery::count(),
             'total_blog_posts' => BlogPost::count(),
             'published_blogs' => BlogPost::where('is_published', true)->count(),
@@ -33,6 +34,6 @@ class DashboardController extends Controller
             ->orderBy('date')
             ->get();
 
-        return view('admin.dashboard', compact('stats', 'submission_trend'));
+        return view('admin.dashboard-material', compact('stats', 'submission_trend'));
     }
 }
