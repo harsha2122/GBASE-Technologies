@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layout-material')
 @section('title', $form->exists ? 'Edit Form' : 'New Form')
 @section('content')
     <h1>{{ $form->exists ? 'Edit Form: ' . $form->name : 'New Form' }}</h1>

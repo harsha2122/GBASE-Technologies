@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layout-material')
 
 @section('content')
 <h2 class="mb-4">Site Settings & Customization</h2>

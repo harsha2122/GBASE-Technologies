@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layout-material')
 @section('title', $form->name . ' — Submissions')
 @section('content')
     <h1>{{ $form->name }} — Submissions</h1>

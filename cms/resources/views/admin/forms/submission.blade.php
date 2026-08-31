@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layout-material')
 @section('title', 'Submission Detail')
 @section('content')
     <h1>Submission #{{ $submission->id }}</h1>

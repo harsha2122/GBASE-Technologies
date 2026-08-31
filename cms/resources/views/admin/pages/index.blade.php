@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layout-material')
 @section('title', 'Pages')
 @section('content')
     <div style="display:flex;justify-content:space-between;align-items:center;">

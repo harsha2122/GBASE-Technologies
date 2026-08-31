@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layout-material')
 @section('title', $page->exists ? 'Edit Page' : 'New Page')
 @section('content')
     <h1>{{ $page->exists ? 'Edit Page: ' . $page->title : 'New Page' }}</h1>
