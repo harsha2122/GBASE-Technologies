@@ -34,6 +34,6 @@ class DashboardController extends Controller
             ->orderBy('date')
             ->get();
 
-        return view('admin.dashboard-material', compact('stats', 'submission_trend'));
+        return view('admin.dashboard-premium', compact('stats', 'submission_trend'));
     }
 }

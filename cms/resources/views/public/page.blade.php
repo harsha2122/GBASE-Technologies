@@ -16,6 +16,7 @@
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/search.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/public-enhanced.css') }}" rel="stylesheet">
 </head>
 <body>
     @include('public.partials.mobile-nav')
