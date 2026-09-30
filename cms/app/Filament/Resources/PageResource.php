@@ -51,6 +51,12 @@ class PageResource extends Resource
                     ->color('primary')
                     ->url(fn (Page $record): string => Pages\EditPageSections::getUrl(['record' => $record])),
                 EditAction::make()->label('Page Settings'),
+                Action::make('viewPage')
+                    ->label('View Page')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->color('gray')
+                    ->url(fn (Page $record): string => $record->publicUrl())
+                    ->openUrlInNewTab(),
             ]);
     }
 

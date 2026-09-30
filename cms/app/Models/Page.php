@@ -29,4 +29,17 @@ class Page extends Model
     {
         return $this->hasMany(PageSection::class)->orderBy('sort_order');
     }
+
+    /**
+     * The live public URL for this page. Slugs don't always match the
+     * historical .html path (kept for SEO/bookmarks), so map explicitly.
+     */
+    public function publicUrl(): string
+    {
+        return match ($this->slug) {
+            'home' => url('/'),
+            'spare-parts' => url('/spare_parts.html'),
+            default => url("/{$this->slug}.html"),
+        };
+    }
 }

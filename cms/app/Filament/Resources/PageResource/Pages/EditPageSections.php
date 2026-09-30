@@ -4,6 +4,7 @@ namespace App\Filament\Resources\PageResource\Pages;
 
 use App\Filament\Resources\PageResource;
 use App\Filament\SectionFormSchemas;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -43,6 +44,18 @@ class EditPageSections extends ResourcePage implements HasForms
     public function getTitle(): string|Htmlable
     {
         return 'Edit Content: '.$this->record->title;
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('viewPage')
+                ->label('View Page')
+                ->icon('heroicon-o-arrow-top-right-on-square')
+                ->color('gray')
+                ->url($this->record->publicUrl())
+                ->openUrlInNewTab(),
+        ];
     }
 
     public function form(Form $form): Form
