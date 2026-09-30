@@ -86,6 +86,41 @@ class SectionFormSchemas
                 static::imageField($c('image'), 'Image'),
             ],
 
+            'page_header' => [
+                TextInput::make($c('heading'))->label('Page Heading')->required(),
+            ],
+
+            'domain_scope_services' => [
+                TextInput::make($c('domain_heading'))->label('Domain Card Heading')->required(),
+                Repeater::make($c('domain_items'))
+                    ->label('Domain Items')
+                    ->schema([
+                        TextInput::make('label')->label('Label')->required(),
+                        TextInput::make('description')->label('Description')->required(),
+                    ])
+                    ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
+                    ->collapsed(),
+
+                TextInput::make($c('scope_heading'))->label('Scope Card Heading')->required(),
+                Repeater::make($c('scope_paragraphs'))
+                    ->label('Scope Paragraphs')
+                    ->simple(
+                        Textarea::make('text')->rows(2)->required()
+                    ),
+
+                TextInput::make($c('services_heading'))->label('Services Card Heading')->required(),
+                Repeater::make($c('services'))
+                    ->label('Services')
+                    ->schema([
+                        TextInput::make('title')->label('Title')->required(),
+                        Textarea::make('description')->label('Description')->rows(2)->required(),
+                    ])
+                    ->itemLabel(fn (array $state): ?string => $state['title'] ?? null)
+                    ->collapsed()
+                    ->reorderable()
+                    ->addActionLabel('Add Service'),
+            ],
+
             'logo_slider' => [
                 TextInput::make($c('heading'))->label('Heading')->required(),
                 Repeater::make($c('logos'))
