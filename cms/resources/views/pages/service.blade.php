@@ -8,12 +8,12 @@
 <div class="col-md-12">
 <div class="breadcrumb-wrapper">
 <div class="page-heading">
-<h3 class="page-title">{{ $header['heading'] ?? 'Consulting' }}</h3>
+<h3 class="page-title">{{ $header['heading'] ?? 'Service' }}</h3>
 </div>
 <div class="breadcrumb-list">
 <ul>
 <li><a href="/">Home</a></li>
-<li class="active"><a href="/consulting.html">Consulting</a></li>
+<li class="active"><a href="/service.html">Service</a></li>
 </ul>
 </div>
 </div>
@@ -21,7 +21,6 @@
 </div>
 </div>
 </div>
-<!-- Contact Form Area Start -->
 <!-- Contact Form Area Start -->
 <div class="contact-form-area mt-3">
 <div class="container">
@@ -65,11 +64,32 @@
                     @endforeach
                 </div>
             </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <a href="/service/equipment-audits.html" style="display:block; background:#f8f9fa; padding:30px; border-radius:10px; border:1px solid #dee2e6; text-align:center; text-decoration:none;">
+                        <i class="fa fa-clipboard-check" style="font-size:28px; color:#0072ff; margin-bottom:12px;"></i>
+                        <h6 style="font-weight:700; color:#222;">Equipment Audits</h6>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <a href="/service/online-support.html" style="display:block; background:#f8f9fa; padding:30px; border-radius:10px; border:1px solid #dee2e6; text-align:center; text-decoration:none;">
+                        <i class="fa fa-headset" style="font-size:28px; color:#0072ff; margin-bottom:12px;"></i>
+                        <h6 style="font-weight:700; color:#222;">Online Support</h6>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <a href="/service/onsite-support.html" style="display:block; background:#f8f9fa; padding:30px; border-radius:10px; border:1px solid #dee2e6; text-align:center; text-decoration:none;">
+                        <i class="fa fa-truck" style="font-size:28px; color:#0072ff; margin-bottom:12px;"></i>
+                        <h6 style="font-weight:700; color:#222;">Onsite Support</h6>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-@include('partials.inquiry-form', ['pageSource' => 'consulting.html'])
+@include('partials.inquiry-form', ['pageSource' => 'service.html'])
 </div>
 </div>
 <!-- Contact Form Area End -->

@@ -98,6 +98,54 @@ class SectionFormSchemas
                 Textarea::make($c('description'))->label('Description')->rows(2)->required(),
             ],
 
+            'contact_info' => [
+                TextInput::make($c('phone_numbers'))->label('Phone Numbers (comma separated)')->required(),
+                TextInput::make($c('emails'))->label('Email Addresses (comma separated)')->required(),
+                Textarea::make($c('address'))->label('Address')->rows(2)->required(),
+            ],
+
+            'company_about' => [
+                TextInput::make($c('heading'))->label('Heading')->required(),
+                Textarea::make($c('description'))->label('Description')->rows(3)->required(),
+                TextInput::make($c('services_heading'))->label('Services Heading')->required(),
+                Repeater::make($c('services'))
+                    ->label('Services')
+                    ->simple(Textarea::make('text')->rows(2)->required()),
+                TextInput::make($c('principals_heading'))->label('Principals Heading')->required(),
+                Repeater::make($c('principals'))
+                    ->label('Principals')
+                    ->simple(Textarea::make('text')->rows(2)->required()),
+            ],
+
+            'equipment_cards' => [
+                TextInput::make($c('intro_short_title'))->label('Section Label (optional)'),
+                TextInput::make($c('intro_heading'))->label('Section Heading (optional)'),
+                Textarea::make($c('intro_description'))->label('Section Description (optional)')->rows(2),
+                Repeater::make($c('cards'))
+                    ->label('Cards')
+                    ->schema([
+                        static::imageField('image', 'Image (optional)'),
+                        TextInput::make('heading')->label('Heading')->required(),
+                        TextInput::make('sub_label')->label('Sub-label (optional)'),
+                        TextInput::make('link')->label('Link (optional, e.g. to a detail page)'),
+                        Textarea::make('description')->label('Description')->rows(3),
+                        Repeater::make('bullets')
+                            ->label('Bullet Points')
+                            ->simple(TextInput::make('text')),
+                        Repeater::make('product_group')
+                            ->label('Product Group Icons')
+                            ->schema([
+                                static::imageField('icon', 'Icon'),
+                                TextInput::make('label')->label('Label'),
+                            ])
+                            ->collapsed(),
+                    ])
+                    ->itemLabel(fn (array $state): ?string => $state['heading'] ?? null)
+                    ->collapsed()
+                    ->reorderable()
+                    ->addActionLabel('Add Card'),
+            ],
+
             'domain_scope_services' => [
                 TextInput::make($c('domain_heading'))->label('Domain Card Heading')->required(),
                 Repeater::make($c('domain_items'))

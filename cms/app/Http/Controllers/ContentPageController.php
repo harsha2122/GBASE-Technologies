@@ -55,4 +55,36 @@ class ContentPageController extends Controller
     {
         return $this->show('equipments', 'pages.equipments');
     }
+
+    public function freezingLanding(): View
+    {
+        return $this->show('freezing-landing', 'pages.equipment-detail');
+    }
+
+    public function heatingLanding(): View
+    {
+        return $this->show('heating-landing', 'pages.equipment-detail');
+    }
+
+    public function equipmentDetail(string $category, string $detailSlug): View
+    {
+        $slug = $category.'-'.str_replace('_', '-', $detailSlug);
+
+        return $this->show($slug, 'pages.equipment-detail');
+    }
+
+    public function contact(): View
+    {
+        return $this->show('contact', 'pages.contact');
+    }
+
+    public function service(): View
+    {
+        return $this->show('service', 'pages.service');
+    }
+
+    public function serviceDetail(string $detailSlug): View
+    {
+        return $this->show("service-{$detailSlug}", 'pages.service-detail');
+    }
 }

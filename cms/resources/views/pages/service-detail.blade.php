@@ -8,12 +8,12 @@
 <div class="col-md-12">
 <div class="breadcrumb-wrapper">
 <div class="page-heading">
-<h3 class="page-title">{{ $header['heading'] ?? 'Get Equipments' }}</h3>
+<h3 class="page-title">{{ $header['heading'] ?? $page->title }}</h3>
 </div>
 <div class="breadcrumb-list">
 <ul>
 <li><a href="/">Home</a></li>
-<li class="active"><a href="/equipments.html">Equipments</a></li>
+<li class="active"><a href="{{ $page->publicUrl() }}">{{ $header['heading'] ?? $page->title }}</a></li>
 </ul>
 </div>
 </div>
@@ -21,12 +21,12 @@
 </div>
 </div>
 </div>
-<!-- Contact Form Area Start -->
+
 <div class="contact-form-area mt-3">
 <div class="container">
-@include('partials.inquiry-form', ['pageSource' => 'equipments.html'])
+@include('partials.inquiry-form', ['pageSource' => $page->slug])
 </div>
 </div>
-<!-- Contact Form Area End -->
+
 @include('partials.brand-slider', ['content' => $brandSlider])
 @endsection
