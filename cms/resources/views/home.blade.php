@@ -724,21 +724,28 @@
             <div class="post-comments-title">
               <h2>{{ $cta['heading'] ?? '' }}</h2>
             </div>
-            <form action="#" method="post" class="comment-form">
+            @if (session('inquiry_sent'))
+            <div class="alert alert-success" style="background:#e8f7ee; border:1px solid #16a34a; color:#15803d; padding:14px 18px; border-radius:8px; margin-bottom:16px;">
+                Thank you — your message has been received. Our team will get back to you shortly.
+            </div>
+            @endif
+            <form action="{{ route('inquiries.store') }}" method="post" class="comment-form">
+              @csrf
+              <input type="hidden" name="page_source" value="home" />
               <div class="row gx-2">
                 <div class="col-xl-6">
                   <div class="contacts-name">
-                    <input name="author" type="text" placeholder="Name" />
+                    <input name="name" type="text" placeholder="Name" required value="{{ old('name') }}" />
                   </div>
                 </div>
                 <div class="col-xl-6">
                   <div class="contacts-email">
-                    <input name="email" type="text" placeholder="Your Email" />
+                    <input name="email" type="text" placeholder="Your Email" required value="{{ old('email') }}" />
                   </div>
                 </div>
                 <div class="col-xl-12">
                   <div class="contacts-message">
-                    <textarea name="comment" cols="20" rows="3" placeholder="Message"></textarea>
+                    <textarea name="message" cols="20" rows="3" placeholder="Message" required></textarea>
                   </div>
                 </div>
                 <div class="col-12">

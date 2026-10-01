@@ -27,6 +27,8 @@ class Inquiry extends Model
         'business_type',
         'production',
         'referral',
+        'machine_serial_no',
+        'part_lines',
         'is_handled',
     ];
 
@@ -38,6 +40,7 @@ class Inquiry extends Model
             'freezing_equipment' => 'array',
             'heating_equipment' => 'array',
             'equipment_options' => 'array',
+            'part_lines' => 'array',
             'is_handled' => 'boolean',
         ];
     }

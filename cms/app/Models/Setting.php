@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
     protected $fillable = [
+        'site_logo',
         'topbar_phone',
         'topbar_email',
         'whatsapp_number',
@@ -21,5 +22,10 @@ class Setting extends Model
     public static function current(): self
     {
         return static::query()->firstOrCreate(['id' => 1]);
+    }
+
+    public function logoUrl(): ?string
+    {
+        return PageSection::resolveImage($this->site_logo);
     }
 }

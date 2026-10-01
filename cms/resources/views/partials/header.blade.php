@@ -48,7 +48,7 @@
 
       <!-- LOGO -->
       <a href="/" class="header-logo">
-        <img src="/images/logo/logo.png" alt="GBASE Logo">
+        <img src="{{ $settings->logoUrl() ?? '/images/logo/logo.png' }}" alt="GBASE Logo">
       </a>
 
       <!-- NAV -->
@@ -367,6 +367,10 @@
       <div class="header-actions">
         <a class="theme-btn" href="/contact.html" style="padding: 10px 15px; font-size: 18px;">Contact <i
             class="fa-regular fa-arrow-right" style="margin-left: 6px;"></i></a>
+        <button id="gbase-theme-toggle" class="gbase-search-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <i class="fa-solid fa-moon gbase-theme-icon-dark"></i>
+          <i class="fa-solid fa-sun gbase-theme-icon-light" style="display:none;"></i>
+        </button>
         <button id="gbase-search-btn" class="gbase-search-toggle" aria-label="Search"><i
             class="fa-solid fa-magnifying-glass"></i></button>
       </div>
@@ -379,9 +383,15 @@
   <div class="gbase-header-mobile">
     <div class="gbase-mobile-inner">
       <a class="gbase-logo" href="/">
-        <img src="images/logo/logo.png">
+        <img src="{{ $settings->logoUrl() ?? '/images/logo/logo.png' }}">
       </a>
-      <div class="gbase-mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button id="gbase-theme-toggle-mobile" class="gbase-search-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <i class="fa-solid fa-moon gbase-theme-icon-dark"></i>
+          <i class="fa-solid fa-sun gbase-theme-icon-light" style="display:none;"></i>
+        </button>
+        <div class="gbase-mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
+      </div>
     </div>
   </div>
 
@@ -392,7 +402,7 @@
       <div class="d-flex justify-content-between align-items-center mb-4"
         style="padding-bottom: 20px; border-bottom: 1px solid #eee;">
         <a href="/">
-          <img src="images/logo/logo.png" alt="GBASE" style="max-width: 120px;">
+          <img src="{{ $settings->logoUrl() ?? '/images/logo/logo.png' }}" alt="GBASE" style="max-width: 120px;">
         </a>
         <div class="gbase-mobile-close" style="padding-bottom: 0;">
           <i class="fa-solid fa-xmark"></i>
@@ -505,7 +515,7 @@
       <div class="menu-sidebar-content">
         <div class="menu-sidebar-logo">
           <a href="javascript:void(0)">
-            <img src="/images/logo/logo.png" style="background-color: #fff; border-radius: 10px" alt="logo" />
+            <img src="{{ $settings->logoUrl() ?? '/images/logo/logo.png' }}" style="background-color: #fff; border-radius: 10px" alt="logo" />
           </a>
         </div>
         <div class="mobile-nav-menu"></div>

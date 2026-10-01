@@ -1,0 +1,43 @@
+/*
+ * Site-wide dark mode.
+ *
+ * The theme's CSS (style.css) hardcodes colors throughout instead of using
+ * CSS custom properties, so a full per-selector dark palette isn't
+ * realistic to maintain. Instead we invert the whole page's colors and
+ * re-invert images/video/svg/icons so photos and logos still look normal.
+ * This gives a complete, low-risk dark mode without touching the theme's
+ * own stylesheet. Trade-off: a handful of CSS background-image sections
+ * (hero banners) will look slightly washed out in dark mode - acceptable
+ * given the alternative is rewriting a 17k-line stylesheet by hand.
+ */
+
+html.gbase-dark {
+  background: #ffffff;
+}
+
+html.gbase-dark body {
+  filter: invert(1) hue-rotate(180deg);
+  background: #ffffff;
+}
+
+html.gbase-dark img,
+html.gbase-dark video,
+html.gbase-dark svg,
+html.gbase-dark iframe,
+html.gbase-dark picture {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html.gbase-dark ::selection {
+  background: #666;
+}
+
+/* Keep the theme toggle button's own icons legible without double-inverting */
+#gbase-theme-toggle,
+#gbase-theme-toggle-mobile {
+  transition: opacity 0.15s ease;
+}
+
+body {
+  transition: filter 0.2s ease;
+}

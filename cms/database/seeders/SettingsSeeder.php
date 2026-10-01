@@ -3,13 +3,17 @@
 namespace Database\Seeders;
 
 use App\Models\Setting;
+use App\Support\MaterializesThemeImages;
 use Illuminate\Database\Seeder;
 
 class SettingsSeeder extends Seeder
 {
+    use MaterializesThemeImages;
+
     public function run(): void
     {
         Setting::query()->updateOrCreate(['id' => 1], [
+            'site_logo' => $this->copyImageToPublicDisk('/images/logo/logo.png', 'branding'),
             'topbar_phone' => '+91 9810384249',
             'topbar_email' => 'info@gbase.co.in',
             'whatsapp_number' => '919315738621',

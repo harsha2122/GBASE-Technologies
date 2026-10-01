@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Models\Setting;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -30,6 +31,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('GBASE Technologies')
+            ->brandLogo(fn () => Setting::current()->logoUrl() ?? asset('images/logo/logo.png'))
+            ->brandLogoHeight('2.5rem')
             ->favicon(asset('images/logo/favicon.png'))
             ->colors([
                 'primary' => Color::hex('#0072ff'),

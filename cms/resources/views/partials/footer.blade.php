@@ -47,7 +47,7 @@
                 <div class="footer-widget-info">
                   <div class="footer-logo">
                     <a href="javascript:void(0)">
-                      <img style="background-color: #fff; border-radius: 10px" src="/images/logo/logo.png"
+                      <img style="background-color: #fff; border-radius: 10px" src="{{ $settings->logoUrl() ?? '/images/logo/logo.png' }}"
                         alt="GBASE Technologies Logo" />
                     </a>
                   </div>
@@ -573,3 +573,5 @@
   </div>
 
   <script src="js/page-search.js"></script>
+  <link rel="stylesheet" href="/css/dark-mode.css" />
+  <script src="/js/dark-mode.js"></script>

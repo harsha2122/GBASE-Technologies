@@ -45,10 +45,10 @@ class InquiryResource extends Resource
                 Section::make('Contact Details')
                     ->columns(2)
                     ->schema([
-                        TextInput::make('company')->required(),
+                        TextInput::make('company'),
                         TextInput::make('name')->required(),
                         TextInput::make('email')->email()->required(),
-                        TextInput::make('phone')->required(),
+                        TextInput::make('phone'),
                         TextInput::make('city'),
                         TextInput::make('country'),
                         TextInput::make('website'),
@@ -57,12 +57,21 @@ class InquiryResource extends Resource
                 Section::make('Requirement')
                     ->columns(2)
                     ->schema([
-                        Textarea::make('message')->columnSpanFull()->rows(4)->required(),
+                        Textarea::make('message')->columnSpanFull()->rows(4),
                         TextInput::make('business_type'),
                         TextInput::make('production')->label('Estimated Production'),
                         TextInput::make('product_type'),
                         TextInput::make('equipment_interest'),
                         TextInput::make('referral')->label('How They Found Us'),
+                        TextInput::make('machine_serial_no')->label('Machine Serial No.'),
+                    ]),
+                Section::make('Spare Part Lines')
+                    ->visible(fn ($record) => filled($record?->part_lines))
+                    ->schema([
+                        TextInput::make('part_lines')->label('Parts Requested')->disabled()->dehydrated(false)
+                            ->formatStateUsing(fn ($state) => collect($state ?? [])
+                                ->map(fn ($line) => ($line['serial_no'] ?? '').' x '.($line['quantity'] ?? '?'))
+                                ->implode(', ')),
                     ]),
                 Section::make('Equipment Selections')
                     ->columns(2)

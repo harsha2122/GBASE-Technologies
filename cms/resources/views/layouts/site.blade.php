@@ -4,6 +4,15 @@
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <meta charset="utf-8" />
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('gbase-theme') === 'dark') {
+          document.documentElement.classList.add('gbase-dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   {{-- Keeps relative asset paths (css/..., js/..., images/...) resolving to
        site root regardless of URL depth, e.g. /knowledge-articles/{slug} --}}
   <base href="{{ url('/') }}/" />

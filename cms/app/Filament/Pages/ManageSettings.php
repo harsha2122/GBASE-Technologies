@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Setting;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -33,6 +34,17 @@ class ManageSettings extends Page implements HasForms
     {
         return $form
             ->schema([
+                Section::make('Branding')
+                    ->description('The logo shown in the site header, footer, and admin sidebar.')
+                    ->schema([
+                        FileUpload::make('site_logo')
+                            ->label('Site Logo')
+                            ->image()
+                            ->disk('public')
+                            ->directory('branding')
+                            ->imagePreviewHeight('80'),
+                    ]),
+
                 Section::make('Contact Details')
                     ->description('Shown in the top bar, floating buttons, and mobile menu on every page.')
                     ->schema([
