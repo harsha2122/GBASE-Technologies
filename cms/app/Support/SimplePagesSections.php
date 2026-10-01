@@ -22,7 +22,11 @@ class SimplePagesSections
                         'section_key' => 'page_header',
                         'section_type' => 'page_header',
                         'label' => 'Page Header',
-                        'content' => ['heading' => 'Consulting'],
+                        'content' => [
+                            'heading' => 'Consulting',
+                            'cta_heading' => 'Your questions deserve the best answers.',
+                            'cta_subheading' => "Let's get in touch and talk about Individual Quick Freezing and Processing.",
+                        ],
                     ],
                     [
                         'section_key' => 'domain_scope_services',
@@ -64,7 +68,11 @@ class SimplePagesSections
                         'section_key' => 'page_header',
                         'section_type' => 'page_header',
                         'label' => 'Page Header',
-                        'content' => ['heading' => 'Spare Parts'],
+                        'content' => [
+                            'heading' => 'Spare Parts',
+                            'cta_heading' => 'Your questions deserve the best answers.',
+                            'cta_subheading' => "Let's get in touch and talk.",
+                        ],
                     ],
                 ],
             ],
@@ -78,7 +86,29 @@ class SimplePagesSections
                         'section_key' => 'page_header',
                         'section_type' => 'page_header',
                         'label' => 'Page Header',
-                        'content' => ['heading' => 'Get Equipments'],
+                        'content' => [
+                            'heading' => 'Get Equipments',
+                            'cta_heading' => 'Your questions deserve the best answers.',
+                            'cta_subheading' => "Let's get in touch and talk about Individual Quick Freezing and Processing.",
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'slug' => 'knowledge-articles',
+                'title' => 'Knowledge Articles',
+                'meta_title' => 'Articles | GBASE Technologies',
+                'meta_description' => 'Practical notes, guides, and insights from the GBASE team.',
+                'sections' => [
+                    [
+                        'section_key' => 'listing_header',
+                        'section_type' => 'listing_header',
+                        'label' => 'Listing Header',
+                        'content' => [
+                            'short_title' => 'Knowledge Centre',
+                            'heading' => 'Articles',
+                            'description' => 'Practical notes, guides, and insights from the GBASE team.',
+                        ],
                     ],
                 ],
             ],

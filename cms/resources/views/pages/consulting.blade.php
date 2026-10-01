@@ -73,9 +73,8 @@
 <div class="gbase-contact-header">
 <i class="fa-light fa-temperature-snowflake"></i>
 <h3>
-            Your questions deserve the best answers.
-            <span>Let's get in touch and talk about Individual Quick Freezing and
-              Processing.</span>
+            {{ $header['cta_heading'] ?? '' }}
+            <span>{{ $header['cta_subheading'] ?? '' }}</span>
 </h3>
 </div>
 <form action="#" class="gbase-contact-form" method="post">

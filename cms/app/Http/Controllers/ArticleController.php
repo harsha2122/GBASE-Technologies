@@ -15,12 +15,26 @@ class ArticleController extends Controller
             ->paginate(9);
 
         $brandSlider = $this->sharedBrandSlider();
-        $page = $this->metaFor(
-            'Articles | GBASE Technologies',
-            'Practical notes, guides, and insights from the GBASE team.'
-        );
 
-        return view('pages.knowledge-articles', compact('articles', 'brandSlider', 'page'));
+        $listingPage = Page::where('slug', 'knowledge-articles')->first();
+        $sections = $listingPage
+            ? $listingPage->sections()
+                ->get()
+                ->keyBy('section_key')
+                ->map(fn ($section) => [
+                    'type' => $section->section_type,
+                    'content' => $section->content ?? [],
+                ])
+            : collect();
+
+        $page = $listingPage
+            ? $this->metaFor($listingPage->meta_title, $listingPage->meta_description)
+            : $this->metaFor(
+                'Articles | GBASE Technologies',
+                'Practical notes, guides, and insights from the GBASE team.'
+            );
+
+        return view('pages.knowledge-articles', compact('articles', 'brandSlider', 'page', 'sections'));
     }
 
     public function show(Article $article): View

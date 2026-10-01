@@ -1,13 +1,14 @@
 @extends('layouts.site')
 
 @section('content')
+  @php $listingHeader = $sections['listing_header']['content'] ?? []; @endphp
   <div class="page-breadcrumb-area style-1">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="breadcrumb-wrapper">
             <div class="page-heading">
-              <h3 class="page-title">Articles</h3>
+              <h3 class="page-title">{{ $listingHeader['heading'] ?? 'Articles' }}</h3>
             </div>
             <div class="breadcrumb-list">
               <ul>
@@ -25,14 +26,14 @@
     <div class="container">
       <div class="section-title">
         <div class="short-title-wrapper">
-          <span class="short-title only-divider">Knowledge Centre</span>
+          <span class="short-title only-divider">{{ $listingHeader['short_title'] ?? 'Knowledge Centre' }}</span>
         </div>
         <div class="main-content">
           <div class="sec-content">
-            <h2 class="title">Articles</h2>
+            <h2 class="title">{{ $listingHeader['heading'] ?? 'Articles' }}</h2>
           </div>
           <div class="sec-desc">
-            <p class="desc">Practical notes, guides, and insights from the GBASE team.</p>
+            <p class="desc">{{ $listingHeader['description'] ?? '' }}</p>
           </div>
         </div>
       </div>

@@ -88,6 +88,14 @@ class SectionFormSchemas
 
             'page_header' => [
                 TextInput::make($c('heading'))->label('Page Heading')->required(),
+                TextInput::make($c('cta_heading'))->label('Quote Form Heading')->required(),
+                TextInput::make($c('cta_subheading'))->label('Quote Form Subheading')->required(),
+            ],
+
+            'listing_header' => [
+                TextInput::make($c('short_title'))->label('Small Label')->required(),
+                TextInput::make($c('heading'))->label('Heading')->required(),
+                Textarea::make($c('description'))->label('Description')->rows(2)->required(),
             ],
 
             'domain_scope_services' => [
