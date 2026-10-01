@@ -573,5 +573,3 @@
   </div>
 
   <script src="js/page-search.js"></script>
-  <link rel="stylesheet" href="/css/dark-mode.css" />
-  <script src="/js/dark-mode.js"></script>

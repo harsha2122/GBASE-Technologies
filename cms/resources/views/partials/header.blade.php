@@ -367,10 +367,6 @@
       <div class="header-actions">
         <a class="theme-btn" href="/contact.html" style="padding: 10px 15px; font-size: 18px;">Contact <i
             class="fa-regular fa-arrow-right" style="margin-left: 6px;"></i></a>
-        <button id="gbase-theme-toggle" class="gbase-search-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-          <i class="fa-solid fa-moon gbase-theme-icon-dark"></i>
-          <i class="fa-solid fa-sun gbase-theme-icon-light" style="display:none;"></i>
-        </button>
         <button id="gbase-search-btn" class="gbase-search-toggle" aria-label="Search"><i
             class="fa-solid fa-magnifying-glass"></i></button>
       </div>
@@ -385,13 +381,7 @@
       <a class="gbase-logo" href="/">
         <img src="{{ $settings->logoUrl() ?? '/images/logo/logo.png' }}">
       </a>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <button id="gbase-theme-toggle-mobile" class="gbase-search-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-          <i class="fa-solid fa-moon gbase-theme-icon-dark"></i>
-          <i class="fa-solid fa-sun gbase-theme-icon-light" style="display:none;"></i>
-        </button>
-        <div class="gbase-mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
-      </div>
+      <div class="gbase-mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
     </div>
   </div>
 
