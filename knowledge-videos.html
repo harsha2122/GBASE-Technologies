@@ -44,9 +44,10 @@
     <![endif]-->
   <link href="/css/search.css" rel="stylesheet">
   </link>
+  <link href="/css/knowledge.css?v=1" rel="stylesheet" />
 </head>
 
-<body>
+<body class="knowledge-page">
   <a class="float" href="https://api.whatsapp.com/send?phone=919315738621" target="_blank">
     <i class="fa fa-whatsapp my-float"></i>
   </a>
@@ -579,11 +580,11 @@
 
       <div class="row gy-5">
         <div class="col-xl-4 col-md-6">
-          <div class="post-card style-1">
+          <div class="post-card style-1" data-knowledge-article="freezing-line-efficiency">
             <div class="image">
               <img src="/images/project/IQF.png" alt="Video thumbnail" />
               <div class="circle-btn-wrapper">
-                <a href="javascript:void(0)" class="circle-btn">
+                <a href="/knowledge-article.html?id=freezing-line-efficiency" class="circle-btn" aria-label="Open article and videos">
                   <i class="fa-solid fa-play"></i>
                 </a>
               </div>
@@ -593,17 +594,17 @@
                 <span class="single-tag">IQF</span>
                 <span class="single-tag">Overview</span>
               </div>
-              <h3 class="title">IQF Line Overview</h3>
+              <h3 class="title"><a href="/knowledge-article.html?id=freezing-line-efficiency">IQF Line Overview</a></h3>
               <p class="desc">A quick look at airflow, belt handling, and cooling consistency.</p>
             </div>
           </div>
         </div>
         <div class="col-xl-4 col-md-6">
-          <div class="post-card style-1">
+          <div class="post-card style-1" data-knowledge-article="weekly-maintenance">
             <div class="image">
-              <img src="/images/product/geo.png" alt="Video thumbnail" />
+              <img src="/images/product/combisort.jpg" alt="Video thumbnail" />
               <div class="circle-btn-wrapper">
-                <a href="javascript:void(0)" class="circle-btn">
+                <a href="/knowledge-article.html?id=weekly-maintenance" class="circle-btn" aria-label="Open article and videos">
                   <i class="fa-solid fa-play"></i>
                 </a>
               </div>
@@ -612,17 +613,17 @@
               <div class="tag-wrapper">
                 <span class="single-tag">Round Fruit Sorting</span>
               </div>
-              <h3 class="title">Maintenance Checklist</h3>
+              <h3 class="title"><a href="/knowledge-article.html?id=weekly-maintenance">Maintenance Checklist</a></h3>
               <p class="desc">Daily checks that keep your line running smoothly.</p>
             </div>
           </div>
         </div>
         <div class="col-xl-4 col-md-6">
-          <div class="post-card style-1">
+          <div class="post-card style-1" data-knowledge-article="uneven-freezing">
             <div class="image">
               <img src="/images/product/6.png" alt="Video thumbnail" />
               <div class="circle-btn-wrapper">
-                <a href="javascript:void(0)" class="circle-btn">
+                <a href="/knowledge-article.html?id=uneven-freezing" class="circle-btn" aria-label="Open article and videos">
                   <i class="fa-solid fa-play"></i>
                 </a>
               </div>
@@ -631,7 +632,7 @@
               <div class="tag-wrapper">
                 <span class="single-tag">Cutting, Dicing & Slicing</span>
               </div>
-              <h3 class="title">Troubleshooting Basics</h3>
+              <h3 class="title"><a href="/knowledge-article.html?id=uneven-freezing">Troubleshooting Basics</a></h3>
               <p class="desc">Common causes of uneven freezing and how to fix them.</p>
             </div>
           </div>
@@ -829,6 +830,8 @@
     </div>
   </div>
   <script src="/js/page-search.js"></script>
+  <script src="/js/knowledge-data.js?v=1"></script>
+  <script src="/js/knowledge.js?v=1"></script>
 </body>
 
 </html>

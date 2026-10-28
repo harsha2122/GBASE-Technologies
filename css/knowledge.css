@@ -1,0 +1,28 @@
+.knowledge-back { display: inline-block; margin-bottom: 24px; color: #176747; }
+.knowledge-heading { max-width: 850px; margin-bottom: 28px; }
+.knowledge-heading h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.2; margin-bottom: 16px; }
+.knowledge-eyebrow, .knowledge-count { color: #176747; font-weight: 600; }
+.post-card .content .knowledge-count { margin-top: 16px; margin-bottom: 0; }
+.knowledge-body { max-width: 850px; }
+.knowledge-article h2 { font-size: 26px; margin: 28px 0 20px; }
+.knowledge-player { aspect-ratio: 16 / 9; width: 100%; max-width: 1000px; background: #111; border-radius: 12px; overflow: hidden; }
+.knowledge-player video, .knowledge-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+.knowledge-now-playing { margin: 16px 0 24px; font-weight: 600; }
+.knowledge-video-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 0; margin: 0; list-style: none; }
+.knowledge-video-button { display: flex; align-items: center; gap: 14px; width: 100%; height: 100%; padding: 12px; text-align: left; color: #242424; background: #fff; border: 2px solid #e0e6e2; border-radius: 10px; cursor: pointer; }
+.knowledge-video-button:hover { background: #f3f8f5; }
+.knowledge-video-button[aria-pressed="true"] { border-color: #176747; background: #eef7f1; }
+.knowledge-video-button:focus-visible, .knowledge-back:focus-visible { outline: 3px solid #176747; outline-offset: 4px; }
+.knowledge-video-button img { width: 96px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px; }
+.knowledge-video-details { min-width: 0; overflow-wrap: anywhere; }
+.knowledge-video-title { display: block; font-weight: 600; line-height: 1.4; }
+.knowledge-video-duration { display: block; font-size: 14px; color: #555; margin-top: 4px; }
+.knowledge-empty { padding: 24px; background: #f3f8f5; border-radius: 10px; }
+@media (max-width: 991px) { .knowledge-video-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 575px) {
+  .knowledge-page .page-breadcrumb-area { padding: 48px 20px; }
+  .knowledge-page .page-heading .page-title { font-size: 32px; line-height: 1.25; }
+  .knowledge-video-list { grid-template-columns: 1fr; }
+  .knowledge-video-button img { width: 100px; }
+}
+.knowledge-article > .container { max-width: 1040px; padding-right: 20px; padding-left: 20px; margin: 0 auto; }

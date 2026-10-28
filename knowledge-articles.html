@@ -44,9 +44,10 @@
     <![endif]-->
   <link href="/css/search.css" rel="stylesheet">
   </link>
+  <link href="/css/knowledge.css?v=1" rel="stylesheet" />
 </head>
 
-<body>
+<body class="knowledge-page">
   <a class="float" href="https://api.whatsapp.com/send?phone=919315738621" target="_blank">
     <i class="fa fa-whatsapp my-float"></i>
   </a>
@@ -579,11 +580,11 @@
 
       <div class="row gy-5">
         <div class="col-xl-4 col-md-6">
-          <div class="post-card style-1">
+          <div class="post-card style-1" data-knowledge-article="freezing-line-efficiency">
             <div class="image">
               <img src="/images/project/IQF.png" alt="Article image" />
               <div class="circle-btn-wrapper">
-                <a href="javascript:void(0)" class="circle-btn">
+                <a href="/knowledge-article.html?id=freezing-line-efficiency" class="circle-btn" aria-label="Open article and videos">
                   <i class="fa-regular fa-arrow-right"></i>
                 </a>
               </div>
@@ -593,7 +594,7 @@
                 <span class="single-tag">IQF</span>
                 <span class="single-tag">Performance</span>
               </div>
-              <h3 class="title">Improving Freezing Line Efficiency</h3>
+              <h3 class="title"><a href="/knowledge-article.html?id=freezing-line-efficiency">Improving Freezing Line Efficiency</a></h3>
               <p class="desc">Reduce product loss and improve throughput with airflow checks and belt tuning.</p>
               <div class="post-meta">
                 <a class="single-post-meta"><span>GBASE Team</span></a>
@@ -604,11 +605,11 @@
           </div>
         </div>
         <div class="col-xl-4 col-md-6">
-          <div class="post-card style-1">
+          <div class="post-card style-1" data-knowledge-article="weekly-maintenance">
             <div class="image">
-              <img src="/images/product/geo.png" alt="Article image" />
+              <img src="/images/product/combisort.jpg" alt="Article image" />
               <div class="circle-btn-wrapper">
-                <a href="javascript:void(0)" class="circle-btn">
+                <a href="/knowledge-article.html?id=weekly-maintenance" class="circle-btn" aria-label="Open article and videos">
                   <i class="fa-regular fa-arrow-right"></i>
                 </a>
               </div>
@@ -617,7 +618,7 @@
               <div class="tag-wrapper">
                 <span class="single-tag">Round Fruit Sorting</span>
               </div>
-              <h3 class="title">Weekly Maintenance Checklist</h3>
+              <h3 class="title"><a href="/knowledge-article.html?id=weekly-maintenance">Weekly Maintenance Checklist</a></h3>
               <p class="desc">A simple routine to keep conveyors, bearings, and airflow systems healthy.</p>
               <div class="post-meta">
                 <a class="single-post-meta"><span>GBASE Team</span></a>
@@ -628,11 +629,11 @@
           </div>
         </div>
         <div class="col-xl-4 col-md-6">
-          <div class="post-card style-1">
+          <div class="post-card style-1" data-knowledge-article="uneven-freezing">
             <div class="image">
               <img src="/images/product/6.png" alt="Article image" />
               <div class="circle-btn-wrapper">
-                <a href="javascript:void(0)" class="circle-btn">
+                <a href="/knowledge-article.html?id=uneven-freezing" class="circle-btn" aria-label="Open article and videos">
                   <i class="fa-regular fa-arrow-right"></i>
                 </a>
               </div>
@@ -641,7 +642,7 @@
               <div class="tag-wrapper">
                 <span class="single-tag">Cutting, Dicing & Slicing</span>
               </div>
-              <h3 class="title">Avoiding Uneven Freezing</h3>
+              <h3 class="title"><a href="/knowledge-article.html?id=uneven-freezing">Avoiding Uneven Freezing</a></h3>
               <p class="desc">Common causes, quick checks, and the fixes that usually solve it fast.</p>
               <div class="post-meta">
                 <a class="single-post-meta"><span>GBASE Team</span></a>
@@ -844,6 +845,8 @@
     </div>
   </div>
   <script src="/js/page-search.js"></script>
+  <script src="/js/knowledge-data.js?v=1"></script>
+  <script src="/js/knowledge.js?v=1"></script>
 </body>
 
 </html>
