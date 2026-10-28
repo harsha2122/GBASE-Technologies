@@ -22,6 +22,23 @@
                         <small class="text-muted">Optional. Shows in blog listing.</small>
                     </div>
 
+                    <div class="mb-3" data-video-url-editor>
+                        <h3>Article videos</h3>
+                        <p>Add YouTube, Vimeo, or direct MP4/WebM URLs. Videos appear in the order shown.</p>
+                        @php($videoUrls = old('video_urls', $post->video_urls ?? []))
+                        <div data-video-url-rows>
+                            @foreach((is_array($videoUrls) && count($videoUrls) ? $videoUrls : ['']) as $videoUrl)
+                                <div data-video-url-row style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+                                    <label style="flex:1;">Video URL
+                                        <input type="url" name="video_urls[]" value="{{ $videoUrl }}" class="form-control" placeholder="https://www.youtube.com/watch?v=..." maxlength="2048">
+                                    </label>
+                                    <button type="button" class="btn btn-outline-secondary" data-remove-video-url>Remove</button>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="button" class="btn btn-outline-primary" data-add-video-url>Add another video URL</button>
+                    </div>
+
                     <div class="mb-3">
                         <label for="content" class="form-label">Content</label>
                         <textarea name="content" id="content" class="form-control" rows="10" required>{{ old('content', $post->content ?? '') }}</textarea>
@@ -49,6 +66,7 @@
                             </div>
 
                             <div class="form-check mb-3">
+                                <input type="hidden" name="is_published" value="0">
                                 <input type="checkbox" name="is_published" id="is_published" class="form-check-input" value="1" {{ old('is_published', $post->is_published ?? false) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="is_published">
                                     Publish Now
@@ -68,4 +86,5 @@
         </form>
     </div>
 </div>
+<script src="{{ asset('js/article-video-editor.js') }}?v=1" defer></script>
 @endsection

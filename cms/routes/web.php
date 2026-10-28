@@ -12,13 +12,19 @@ use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\FormSubmitController;
+use App\Http\Controllers\PublicBlogController;
 use App\Http\Controllers\PublicPageController;
+use App\Models\BlogPost;
 use Illuminate\Support\Facades\Route;
 
 // -----------------------------------------------------------------------
 // Public site
 // -----------------------------------------------------------------------
 Route::get('/', [PublicPageController::class, 'show'])->defaults('slug', 'home');
+Route::get('/knowledge-articles', [PublicBlogController::class, 'index'])->name('knowledge.articles');
+Route::get('/knowledge-videos', [PublicBlogController::class, 'videos'])->name('knowledge.videos');
+Route::get('/knowledge-articles/{post:slug}', [PublicBlogController::class, 'show'])->name('knowledge.show');
+Route::get('/blog/{post:slug}', fn (BlogPost $post) => redirect()->route('knowledge.show', $post));
 Route::post('/forms/{form}/submit', [FormSubmitController::class, 'store'])->name('forms.submit');
 
 // -----------------------------------------------------------------------
@@ -56,7 +62,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('gallery', GalleryController::class);
 
         // Blog
-        Route::resource('blog', BlogController::class);
+        Route::resource('blog', BlogController::class)->parameters(['blog' => 'post']);
 
         // Partners
         Route::resource('partners', PartnerController::class);

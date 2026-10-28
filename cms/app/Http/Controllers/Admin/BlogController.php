@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use App\Rules\PlayableVideoUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -12,6 +13,7 @@ class BlogController extends Controller
     public function index()
     {
         $posts = BlogPost::latest()->paginate(20);
+
         return view('admin.blog.index', compact('posts'));
     }
 
@@ -29,9 +31,15 @@ class BlogController extends Controller
             'featured_image' => 'nullable|image|max:5120',
             'author' => 'nullable|string|max:100',
             'is_published' => 'boolean',
+            'video_urls' => ['nullable', 'array'],
+            'video_urls.*' => ['nullable', 'string', 'max:2048', new PlayableVideoUrl],
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
+        $validated['is_published'] = $request->boolean('is_published');
+        if (array_key_exists('video_urls', $validated)) {
+            $validated['video_urls'] = array_values(array_filter($validated['video_urls'] ?? []));
+        }
 
         if ($request->hasFile('featured_image')) {
             $validated['featured_image'] = $request->file('featured_image')->store('blog', 'public');
@@ -42,6 +50,7 @@ class BlogController extends Controller
         }
 
         BlogPost::create($validated);
+
         return redirect()->route('admin.blog.index')->with('success', 'Blog post created.');
     }
 
@@ -59,25 +68,33 @@ class BlogController extends Controller
             'featured_image' => 'nullable|image|max:5120',
             'author' => 'nullable|string|max:100',
             'is_published' => 'boolean',
+            'video_urls' => ['nullable', 'array'],
+            'video_urls.*' => ['nullable', 'string', 'max:2048', new PlayableVideoUrl],
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
+        $validated['is_published'] = $request->boolean('is_published');
+        if (array_key_exists('video_urls', $validated)) {
+            $validated['video_urls'] = array_values(array_filter($validated['video_urls'] ?? []));
+        }
 
         if ($request->hasFile('featured_image')) {
             $validated['featured_image'] = $request->file('featured_image')->store('blog', 'public');
         }
 
-        if ($validated['is_published'] && !$post->published_at) {
+        if ($validated['is_published'] && ! $post->published_at) {
             $validated['published_at'] = now();
         }
 
         $post->update($validated);
+
         return redirect()->route('admin.blog.index')->with('success', 'Blog post updated.');
     }
 
     public function destroy(BlogPost $post)
     {
         $post->delete();
+
         return back()->with('success', 'Blog post deleted.');
     }
 }

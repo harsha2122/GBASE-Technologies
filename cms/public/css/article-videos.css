@@ -1,0 +1,25 @@
+.knowledge-content { max-width: 1120px; margin: 0 auto; padding: 40px 20px; }
+.knowledge-content .knowledge-content { padding: 0; }
+.knowledge-content h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.2; margin: 16px 0; overflow-wrap: anywhere; }
+.knowledge-content h2 { font-size: 26px; margin: 0 0 20px; line-height: 1.3; }
+.knowledge-eyebrow, .knowledge-count { color: #176747; font-weight: 600; }
+.knowledge-nav { display: flex; gap: 24px; margin: 20px 0 32px; }
+.knowledge-article-heading { margin: 32px 0; }
+.knowledge-article-body { margin-bottom: 32px; overflow-wrap: anywhere; }
+.knowledge-player { width: 100%; aspect-ratio: 16/9; background: #111; border-radius: 12px; overflow: hidden; }
+.knowledge-player video, .knowledge-player iframe { display: block; width: 100%; height: 100%; border: 0; }
+.knowledge-playing { margin: 16px 0 24px; font-weight: 600; }
+.knowledge-video-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; list-style: none; padding: 0; margin: 0; }
+.knowledge-video-list button { display: flex; align-items: center; gap: 16px; width: 100%; height: 100%; padding: 18px; border: 2px solid #e0e6e2; border-radius: 10px; background: #fff; color: #242424; text-align: left; cursor: pointer; }
+.knowledge-video-list button:hover { background: #f3f8f5; }
+.knowledge-video-list button[aria-pressed=true] { background: #eef7f1; border-color: #176747; }
+.knowledge-video-list button:focus-visible { outline: 3px solid #176747; outline-offset: 4px; }
+.knowledge-video-list small { display: block; color: #555; overflow-wrap: anywhere; }
+.knowledge-video-number { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; background: #e7f1eb; border-radius: 50%; font-weight: 600; }
+.knowledge-post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-bottom: 32px; }
+.knowledge-post-card { border: 1px solid #e0e6e2; border-radius: 12px; overflow: hidden; }
+.knowledge-post-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.knowledge-post-card-body { padding: 24px; overflow-wrap: anywhere; }
+.knowledge-post-card-body h2 { font-size: 24px; }
+@media (max-width: 991px) { .knowledge-video-list, .knowledge-post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 575px) { .knowledge-video-list, .knowledge-post-grid { grid-template-columns: 1fr; } }

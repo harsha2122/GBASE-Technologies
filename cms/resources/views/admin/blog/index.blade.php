@@ -14,6 +14,7 @@
             <thead>
                 <tr>
                     <th>Title</th>
+                    <th>Videos</th>
                     <th>Author</th>
                     <th>Published</th>
                     <th>Views</th>
@@ -27,8 +28,9 @@
                         <td>
                             <strong>{{ Str::limit($post->title, 40) }}</strong>
                             <br>
-                            <small class="text-muted">/blog/{{ $post->slug }}</small>
+                            <a href="{{ route('knowledge.show', $post) }}" target="_blank" rel="noopener">View article</a>
                         </td>
+                        <td>{{ count($post->playableVideos()) }}</td>
                         <td>{{ $post->author ?? 'Admin' }}</td>
                         <td>{{ $post->published_at?->format('M d, Y') ?? 'Draft' }}</td>
                         <td>{{ $post->views }}</td>
@@ -49,7 +51,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center text-muted py-4">No blog posts yet. <a href="{{ route('admin.blog.create') }}">Create one</a></td>
+                        <td colspan="7" class="text-center text-muted py-4">No blog posts yet. <a href="{{ route('admin.blog.create') }}">Create one</a></td>
                     </tr>
                 @endforelse
             </tbody>

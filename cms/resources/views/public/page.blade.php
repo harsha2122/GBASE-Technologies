@@ -17,6 +17,9 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/search.css') }}" rel="stylesheet">
     <link href="{{ asset('css/public-enhanced.css') }}" rel="stylesheet">
+    @isset($posts)
+        <link href="{{ asset('css/article-videos.css') }}?v=1" rel="stylesheet">
+    @endisset
 </head>
 <body>
     @include('public.partials.mobile-nav')
@@ -48,6 +51,12 @@
                 @endswitch
             </section>
         @endforeach
+
+        @isset($posts)
+            @if($posts->total() > 0)
+                @include('public.partials.knowledge-posts')
+            @endif
+        @endisset
 
         @foreach ($page->forms as $form)
             {!! $form->before_html !!}
