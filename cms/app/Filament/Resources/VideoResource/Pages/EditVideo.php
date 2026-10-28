@@ -10,6 +10,13 @@ class EditVideo extends EditRecord
 {
     protected static string $resource = VideoResource::class;
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['video_urls'] = $this->record->urls();
+
+        return $data;
+    }
+
     protected function getHeaderActions(): array
     {
         return [

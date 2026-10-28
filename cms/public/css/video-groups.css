@@ -1,0 +1,20 @@
+.video-group-title { border: 0; background: none; color: inherit; font: inherit; text-align: inherit; padding: 0; cursor: pointer; }
+.video-group-title:hover { text-decoration: underline; }
+.video-group-count { color: #176747; font-weight: 600; margin-top: 12px; }
+.video-group-dialog { width: min(1000px, 94vw); max-height: 90vh; max-height: 90dvh; margin: auto; padding: 28px; border: 0; border-radius: 14px; overflow-y: auto; color: #242424; background: #fff; }
+.video-group-dialog::backdrop { background: rgb(0 0 0 / 65%); }
+.video-group-dialog h2 { font-size: clamp(24px, 4vw, 32px); margin: 0 44px 14px 0; line-height: 1.3; }
+.video-group-close { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+.video-group-close button { font-size: 30px; line-height: 1; border: 0; border-radius: 6px; padding: 6px 12px; background: #f2f4f2; color: #242424; cursor: pointer; }
+.video-group-player { width: 100%; aspect-ratio: 16/9; background: #111; border-radius: 10px; overflow: hidden; display: grid; place-items: center; }
+.video-group-player iframe, .video-group-player video { width: 100%; height: 100%; border: 0; display: block; }
+.video-group-player > a { color: #fff; padding: 24px; text-decoration: underline; }
+.video-group-dialog [data-group-status] { margin: 16px 0; font-weight: 600; }
+.video-group-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 0; margin: 0; list-style: none; }
+.video-group-list button { display: flex; gap: 12px; align-items: center; width: 100%; padding: 12px; text-align: left; border: 2px solid #e0e6e2; border-radius: 8px; background: #fff; color: #242424; cursor: pointer; }
+.video-group-list button[aria-pressed=true] { border-color: #176747; background: #eef7f1; }
+.video-group-list img { width: 80px; aspect-ratio: 16/9; object-fit: cover; border-radius: 4px; }
+.video-group-list small { display: block; font-size: 12px; overflow-wrap: anywhere; }
+.video-group-original { display: block; margin-top: 8px; font-size: 12px; text-decoration: underline; }
+.video-group-dialog button:focus-visible, .video-group-title:focus-visible { outline: 3px solid #176747; outline-offset: 3px; }
+@media (max-width: 767px) { .video-group-list { grid-template-columns: 1fr; } .video-group-dialog { padding: 16px; } }

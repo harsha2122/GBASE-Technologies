@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\VideoResource\Pages;
 use App\Models\Video;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -39,7 +40,14 @@ class VideoResource extends Resource
                 ->disk('public')
                 ->directory('videos')
                 ->imagePreviewHeight('150'),
-            TextInput::make('video_url')->label('Video URL (YouTube/Vimeo link, optional)')->url(),
+            Repeater::make('video_urls')
+                ->label('Video URLs')
+                ->simple(TextInput::make('url')->label('Video URL')->url()->rules(['url:http,https'])->maxLength(2048)->required())
+                ->defaultItems(0)
+                ->maxItems(5)
+                ->addActionLabel('Add another video URL')
+                ->reorderableWithButtons()
+                ->helperText('Add up to 5 YouTube, Vimeo, Google Drive, or direct video links. Use the arrows to change their order.'),
             TagsInput::make('tags')->label('Tags')->placeholder('Add a tag and press enter'),
             TextInput::make('sort_order')->numeric()->default(0),
             Toggle::make('is_published')->label('Published')->default(true),
@@ -52,7 +60,7 @@ class VideoResource extends Resource
             ->columns([
                 ImageColumn::make('thumbnail')->label('')->disk('public'),
                 TextColumn::make('title')->searchable()->limit(40),
-                TextColumn::make('video_url')->label('Video URL')->limit(30),
+                TextColumn::make('video_count')->label('Videos')->state(fn (Video $record): int => count($record->urls())),
                 IconColumn::make('is_published')->label('Published')->boolean(),
             ])
             ->defaultSort('sort_order')

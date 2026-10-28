@@ -40,15 +40,16 @@
 
       <div class="row gy-5">
         @forelse ($videos as $video)
+        @php($videoUrls = $video->urls())
         <div class="col-xl-4 col-md-6">
           <div class="post-card style-1">
             <div class="image">
               <img src="{{ $video->thumbnailUrl() ?? '/images/project/IQF.png' }}" alt="{{ $video->title }}" />
               <div class="circle-btn-wrapper">
-                @if ($video->video_url)
-                <a href="{{ $video->video_url }}" class="circle-btn" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-play"></i>
-                </a>
+                @if (count($videoUrls))
+                <button type="button" class="circle-btn" data-open-video-group="video-group-{{ $video->id }}" aria-label="Watch {{ $video->title }}">
+                  <i class="fa-solid fa-play" aria-hidden="true"></i>
+                </button>
                 @else
                 <span class="circle-btn">
                   <i class="fa-solid fa-play"></i>
@@ -62,11 +63,21 @@
                 <span class="single-tag">{{ $tag }}</span>
                 @endforeach
               </div>
-              <h3 class="title">{{ $video->title }}</h3>
+              <h3 class="title">
+                @if(count($videoUrls))
+                  <button type="button" class="video-group-title" data-open-video-group="video-group-{{ $video->id }}">{{ $video->title }}</button>
+                @else
+                  {{ $video->title }}
+                @endif
+              </h3>
               <p class="desc">{{ $video->description }}</p>
+              <p class="video-group-count">{{ count($videoUrls) }} {{ count($videoUrls) === 1 ? 'video' : 'videos' }}</p>
             </div>
           </div>
         </div>
+        @if(count($videoUrls))
+          @include('partials.video-group', ['video' => $video, 'videoUrls' => $videoUrls])
+        @endif
         @empty
         <div class="col-12">
           <p class="desc text-center">No videos published yet.</p>
@@ -76,5 +87,7 @@
     </div>
   </div>
   <!-- Knowledge Videos Area End -->
+<link rel="stylesheet" href="{{ asset('css/video-groups.css') }}?v=1">
+<script src="{{ asset('js/video-groups.js') }}?v=1" defer></script>
 @include('partials.brand-slider', ['content' => $brandSlider])
 @endsection
