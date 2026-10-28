@@ -1,7 +1,11 @@
 <x-mail::message>
 # New enquiry from the GBASE website
 
-**Page:** {{ $pageLabel }} ({{ $submission->page_source ?? 'Unknown page' }})
+**Page:** {{ $pageLabel }}@if($sourcePage['path']) ({{ $sourcePage['path'] }})@endif
+
+@if($sourcePage['inferred'])
+Page inferred from the form’s linked page; the original page was not recorded.
+@endif
 **Form:** {{ $submission->form->name }}
 
 ---

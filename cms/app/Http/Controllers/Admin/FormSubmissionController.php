@@ -11,7 +11,7 @@ class FormSubmissionController extends Controller
     public function index(Form $form)
     {
         $submissions = $form->submissions()
-            ->with('values.field')
+            ->with(['values.field', 'form.page'])
             ->latest()
             ->paginate(25);
 
@@ -20,13 +20,14 @@ class FormSubmissionController extends Controller
 
     public function show(Form $form, FormSubmission $submission)
     {
-        $submission->load('values.field');
+        $submission->load('values.field', 'form.page');
+
         return view('admin.forms.submission', compact('form', 'submission'));
     }
 
     public function allSubmissions()
     {
-        $submissions = FormSubmission::with('form')->latest()->paginate(20);
+        $submissions = FormSubmission::with('form.page')->latest()->paginate(20);
         $totalCount = FormSubmission::count();
         $todayCount = FormSubmission::whereDate('created_at', today())->count();
         $weekCount = FormSubmission::whereDate('created_at', '>=', today()->subDays(7))->count();

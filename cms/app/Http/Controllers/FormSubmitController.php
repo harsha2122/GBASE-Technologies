@@ -6,6 +6,7 @@ use App\Mail\FormSubmissionReceived;
 use App\Models\Form;
 use App\Models\FormSubmission;
 use App\Models\FormSubmissionValue;
+use App\Support\SubmissionPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -21,7 +22,7 @@ class FormSubmitController extends Controller
     {
         $form->load('fields');
 
-        $rules = [];
+        $rules = ['page_source' => ['nullable', 'string', 'max:255']];
         foreach ($form->fields as $field) {
             $fieldRules = [];
             $fieldRules[] = $field->is_required ? 'required' : 'nullable';
@@ -37,7 +38,7 @@ class FormSubmitController extends Controller
 
         $submission = FormSubmission::create([
             'form_id' => $form->id,
-            'page_source' => $request->input('page_source'),
+            'page_source' => SubmissionPage::capture($request, $form),
             'ip_address' => $request->ip(),
         ]);
 
@@ -57,7 +58,7 @@ class FormSubmitController extends Controller
             Mail::to($form->notify_email)->send(new FormSubmissionReceived($submission));
             $submission->update(['email_sent' => true]);
         } catch (\Throwable $e) {
-            Log::error('Form submission email failed: ' . $e->getMessage());
+            Log::error('Form submission email failed: '.$e->getMessage());
         }
 
         return response()->json([

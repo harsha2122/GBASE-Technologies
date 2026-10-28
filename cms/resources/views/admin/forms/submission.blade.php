@@ -2,7 +2,11 @@
 @section('title', 'Submission Detail')
 @section('content')
     <h1>Submission #{{ $submission->id }}</h1>
-    <p><strong>Page:</strong> {{ $submission->page_source }}<br>
+    <div class="mb-3">
+        <strong>Source page:</strong>
+        <x-submission-page :submission="$submission" />
+    </div>
+    <p><strong>Form:</strong> {{ $form->name }}<br>
        <strong>Date:</strong> {{ $submission->created_at->format('Y-m-d H:i') }}</p>
 
     <div class="card-box">

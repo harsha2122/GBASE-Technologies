@@ -20,7 +20,7 @@ class DashboardController extends Controller
             'total_forms' => Form::count(),
             'total_submissions' => FormSubmission::count(),
             'today_submissions' => FormSubmission::whereDate('created_at', today())->count(),
-            'recent_submissions' => FormSubmission::with('form')->latest()->take(8)->get(),
+            'recent_submissions' => FormSubmission::with('form.page')->latest()->take(8)->get(),
             'total_galleries' => Gallery::count(),
             'total_blog_posts' => BlogPost::count(),
             'published_blogs' => BlogPost::where('is_published', true)->count(),

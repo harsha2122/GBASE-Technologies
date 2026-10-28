@@ -75,7 +75,10 @@
             var originalText = btn ? btn.textContent : '';
             if (btn) { btn.textContent = 'Sending…'; btn.disabled = true; }
 
-            fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+            var formData = new FormData(form);
+            formData.set('page_source', window.location.pathname);
+
+            fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
                 .then(function (res) { return res.json(); })
                 .then(function (data) {
                     alert(data.message);

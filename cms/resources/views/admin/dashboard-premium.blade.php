@@ -314,6 +314,7 @@
                 <thead>
                     <tr>
                         <th>Form Name</th>
+                        <th>Source page</th>
                         <th>Submitted</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -324,9 +325,8 @@
                         <tr>
                             <td>
                                 <strong>{{ $submission->form->name }}</strong>
-                                <br>
-                                <small style="color: var(--text-secondary);">{{ $submission->page_source }}</small>
                             </td>
+                            <td><x-submission-page :submission="$submission" /></td>
                             <td>
                                 <small style="color: var(--text-secondary);">
                                     {{ $submission->created_at->format('M d, Y H:i') }}

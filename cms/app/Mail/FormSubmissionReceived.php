@@ -11,14 +11,13 @@ class FormSubmissionReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public FormSubmission $submission)
-    {
-    }
+    public function __construct(public FormSubmission $submission) {}
 
     public function build()
     {
-        $submission = $this->submission->load('values.field', 'form');
-        $pageLabel = $this->humanizePageSource($submission->page_source);
+        $submission = $this->submission->load('values.field', 'form.page');
+        $sourcePage = $submission->sourcePage();
+        $pageLabel = $sourcePage['label'];
 
         return $this
             ->subject("GBASE Enquiry [{$pageLabel}] — {$submission->form->name}")
@@ -26,20 +25,7 @@ class FormSubmissionReceived extends Mailable
             ->with([
                 'submission' => $submission,
                 'pageLabel' => $pageLabel,
+                'sourcePage' => $sourcePage,
             ]);
-    }
-
-    private function humanizePageSource(?string $raw): string
-    {
-        if (empty($raw)) {
-            return 'Unknown page';
-        }
-        $path = preg_replace('/\.html?$/i', '', $raw);
-        $segments = array_filter(explode('/', $path), fn ($s) => $s !== '');
-        $labels = array_map(function ($segment) {
-            $words = preg_split('/[-_]+/', $segment);
-            return implode(' ', array_map('ucfirst', $words));
-        }, $segments);
-        return implode(' - ', $labels) ?: 'Unknown page';
     }
 }
