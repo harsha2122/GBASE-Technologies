@@ -729,8 +729,9 @@
                 Thank you — your message has been received. Our team will get back to you shortly.
             </div>
             @endif
-            <form action="{{ route('inquiries.store') }}" method="post" class="comment-form">
+            <form action="{{ route('inquiries.store') }}" data-inquiry-form method="post" class="comment-form">
               @csrf
+@include('partials.inquiry-protection')
               <input type="hidden" name="page_source" value="home" />
               <div class="row gx-2">
                 <div class="col-xl-6">
@@ -745,7 +746,7 @@
                 </div>
                 <div class="col-xl-12">
                   <div class="contacts-message">
-                    <textarea name="message" cols="20" rows="3" placeholder="Message" required></textarea>
+                    <textarea name="message" cols="20" rows="3" placeholder="Message" required>{{ old('message') }}</textarea>
                   </div>
                 </div>
                 <div class="col-12">

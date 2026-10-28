@@ -556,7 +556,7 @@
   <script src="js/wow.min.js"></script>
   <script src="js/tilt.jquery.min.js"></script>
   <script src="js/custom-slider.js"></script>
-  <script src="/js/custom.js?v=5"></script>
+  <script src="/js/custom.js?v=6"></script>
   <script src="js/translation.js"></script>
   <!-- Search Overlay -->
   <div id="gbase-search-overlay" class="gbase-search-overlay">
@@ -573,3 +573,5 @@
   </div>
 
   <script src="js/page-search.js"></script>
+
+<script src="{{ asset('js/inquiry-forms.js') }}?v=1" defer></script>

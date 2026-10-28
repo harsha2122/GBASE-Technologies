@@ -37,8 +37,9 @@
     Thank you — your request has been received. Our team will get back to you shortly.
 </div>
 @endif
-<form action="{{ route('inquiries.store') }}" class="gbase-contact-form" method="post" enctype="multipart/form-data">
+<form action="{{ route('inquiries.store') }}" data-inquiry-form class="gbase-contact-form" method="post" enctype="multipart/form-data">
 @csrf
+@include('partials.inquiry-protection')
 <div class="row"><input name="page_source" type="hidden" value="spare_parts.html"/>
 <!-- Company -->
 <div class="col-md-6">

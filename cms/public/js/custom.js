@@ -198,6 +198,7 @@ function showFormToast(message, isSuccess) {
 // -----------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('form.gbase-contact-form').forEach(function (form) {
+    if (form.hasAttribute('data-inquiry-form')) return;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 

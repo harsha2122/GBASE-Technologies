@@ -3,14 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
+use App\Support\InquiryProtection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\ValidationException;
 
 class InquiryController extends Controller
 {
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, InquiryProtection $protection): RedirectResponse|JsonResponse
     {
+        if ($request->filled('contact_fax')) {
+            return $this->received($request);
+        }
+
         $data = $request->validate([
+            'cf-turnstile-response' => ['nullable', 'string', 'max:2048'],
             'page_source' => ['nullable', 'string', 'max:255'],
             'company' => ['nullable', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
@@ -20,7 +29,7 @@ class InquiryController extends Controller
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
             'website' => ['nullable', 'string', 'max:255'],
-            'message' => ['nullable', 'string'],
+            'message' => ['nullable', 'string', 'max:10000'],
             'product_types' => ['nullable', 'array'],
             'pre_process' => ['nullable', 'array'],
             'freezing_equipment' => ['nullable', 'array'],
@@ -38,6 +47,10 @@ class InquiryController extends Controller
             'quantity_required' => ['nullable', 'array'],
             'quantity_required.*' => ['nullable', 'integer', 'min:1'],
         ]);
+
+        $protection->verify($request);
+        unset($data['cf-turnstile-response']);
+        $data['email'] = strtolower(trim($data['email']));
 
         $partLines = collect($data['part_serial_no'] ?? [])
             ->map(fn ($serial, $i) => [
@@ -58,7 +71,36 @@ class InquiryController extends Controller
 
         unset($data['others_specify']);
 
-        Inquiry::create($data);
+        if (blank($data['message'] ?? null) && empty($partLines) && blank($data['machine_serial_no'] ?? null)) {
+            throw ValidationException::withMessages(['message' => 'Please describe your requirement or add the part details you need.']);
+        }
+        $data['message'] = $data['message'] ?? '';
+
+        $duplicateKey = $protection->duplicateKey($data);
+        if (! Cache::add($duplicateKey, true, 600)) {
+            return $this->received($request, true);
+        }
+
+        try {
+            Inquiry::create($data);
+        } catch (\Throwable $exception) {
+            Cache::forget($duplicateKey);
+            throw $exception;
+        }
+
+        return $this->received($request);
+    }
+
+    private function received(Request $request, bool $duplicate = false): RedirectResponse|JsonResponse
+    {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $duplicate
+                    ? 'We have already received this enquiry. There is no need to resend it.'
+                    : 'Thank you — your enquiry has been received. Our team will get back to you shortly.',
+            ]);
+        }
 
         return back()->with('inquiry_sent', true);
     }

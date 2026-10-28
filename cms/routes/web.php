@@ -9,7 +9,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Middleware\TrackPageView;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/inquiries', [InquiryController::class, 'store'])->name('inquiries.store');
+Route::post('/inquiries', [InquiryController::class, 'store'])->middleware('throttle:inquiries')->name('inquiries.store');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::middleware(TrackPageView::class)->group(function () {

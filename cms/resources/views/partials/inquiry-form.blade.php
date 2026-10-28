@@ -15,8 +15,9 @@
     Thank you — your message has been received. Our team will get back to you shortly.
 </div>
 @endif
-<form action="{{ route('inquiries.store') }}" class="gbase-contact-form" method="post">
+<form action="{{ route('inquiries.store') }}" data-inquiry-form class="gbase-contact-form" method="post">
 @csrf
+@include('partials.inquiry-protection')
 <div class="row"><input name="page_source" type="hidden" value="{{ $pageSource }}"/>
 <div class="col-md-6">
 <div class="gbase-form-group">
