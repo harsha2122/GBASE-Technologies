@@ -24,7 +24,7 @@
                 {{ $hero['description'] ?? '' }}
               </p>
               <div class="btn-wrapper animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
-                <a href="{{ $hero['primary_button_link'] ?? '#' }}" target="_blank" class="theme-btn"
+                <a href="{{ $brochureUrl ?? ($hero['primary_button_link'] ?? asset('E-Brochure Final.pdf')) }}" target="_blank" rel="noopener" class="theme-btn"
                   style="background: #cff480; color: #292929; border:none;">{{ $hero['primary_button_text'] ?? '' }}</a>
                 <a href="{{ $hero['secondary_button_link'] ?? '#' }}" class="theme-btn style-outline"
                   style="margin-left: 15px; background: #ffffff; color: #000000; border: none;">{{ $hero['secondary_button_text'] ?? '' }}</a>

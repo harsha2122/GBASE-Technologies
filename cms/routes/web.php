@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BrochureController;
 use App\Http\Controllers\ContentPageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InquiryController;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/inquiries', [InquiryController::class, 'store'])->middleware('throttle:inquiries')->name('inquiries.store');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/brochure/download', BrochureController::class)->name('brochure.download');
 
 Route::middleware(TrackPageView::class)->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\Setting;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -22,6 +23,7 @@ class HomeController extends Controller
         return view('home', [
             'page' => $page,
             'sections' => $sections,
+            'brochureUrl' => Setting::current()->brochure_path ? route('brochure.download') : null,
         ]);
     }
 }

@@ -45,6 +45,21 @@ class ManageSettings extends Page implements HasForms
                             ->imagePreviewHeight('80'),
                     ]),
 
+                Section::make('Brochure')
+                    ->description('The PDF available from the homepage Download Brochure button.')
+                    ->schema([
+                        FileUpload::make('brochure_path')
+                            ->label('Brochure PDF')
+                            ->disk('local')
+                            ->directory('brochures')
+                            ->visibility('private')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->maxSize(30720)
+                            ->previewable(false)
+                            ->downloadable()
+                            ->helperText('Upload a PDF up to 30 MB, then save settings. Remove the file and save to restore the original brochure.'),
+                    ]),
+
                 Section::make('Contact Details')
                     ->description('Shown in the top bar, floating buttons, and mobile menu on every page.')
                     ->schema([
